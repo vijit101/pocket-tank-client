@@ -3,16 +3,16 @@ using UnityEngine;
 namespace PocketTanks.Networking
 {
     [RequireComponent(typeof(SocketIOComponent))]
-    public class NetworkService : MonoBehaviour
+    public class NetworkService : MonoSingletonGeneric<NetworkService>
     {
         public SocketIOComponent socketIOComponent;
-        ConnectionStatus connectionStatus;
+        protected ConnectionStatus connectionStatus;
+        protected JSONObject PlayerData = new JSONObject();
 
         // Start is called before the first frame update
         void Start()
         {
             connectionStatus = ConnectionStatus.UnConnected;
-            PlayerPrefs.SetInt(KeyStrings.PlayerID, 0);
             socketIOComponent.Connect();
             socketIOComponent.On("connection", OnConnection); // "Event",Function
             socketIOComponent.On("error", OnError);
@@ -32,23 +32,40 @@ namespace PocketTanks.Networking
         {
             Debug.Log("NetworkService + Server Connected" + socketIOEvent);
             connectionStatus = ConnectionStatus.Connected;
-            AuthentictionRequest();
+            AuthenticationRequest();
         }
 
-        private void AuthentictionRequest()
+        private void AuthenticationRequest()
         {
             if (connectionStatus == ConnectionStatus.Connected)
             {
-                JSONObject PlayerData = new JSONObject();
-                PlayerData[KeyStrings.PlayerID] = new JSONObject(PlayerPrefs.GetInt(KeyStrings.PlayerID));
-                socketIOComponent.On(KeyStrings.AuthenticationRequest, OnAuthenticationResponse);
                 //socketIOComponent.Emit(KeyStrings.AuthenticationRequest, PlayerData);
-                socketIOComponent.Emit(KeyStrings.AuthenticationRequest);
+                if(PlayerPrefs.GetString(KeyStrings.PlayerID) != "")
+                {
+
+                    PlayerData[KeyStrings.PlayerID] = new JSONObject(PlayerPrefs.GetString(KeyStrings.PlayerID));
+                    Debug.Log("AuthenticationRequest" + PlayerPrefs.GetString(KeyStrings.PlayerID));
+                    PlayerAuthentication();
+                }
+                else
+                {
+                    PlayerData[KeyStrings.PlayerID] = new JSONObject("0");
+                    PlayerAuthentication();
+                }
             }
         }
+
+        private void PlayerAuthentication()
+        {
+            socketIOComponent.Emit(KeyStrings.AuthenticationRequest, PlayerData);
+            socketIOComponent.On(KeyStrings.AuthenticationResponse, OnAuthenticationResponse);
+            
+        }
+
         private void OnAuthenticationResponse(SocketIOEvent socketIOEvent)
         {
-            Debug.Log("NetworkService + Server Connected" + socketIOEvent);
+            Debug.Log("NetworkService + OnAuthenticationResponse" + socketIOEvent);
+            connectionStatus = ConnectionStatus.Authenticated;
         }
     }
 
