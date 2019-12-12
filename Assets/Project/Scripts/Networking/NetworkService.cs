@@ -1,4 +1,5 @@
 ﻿using SocketIO;
+using System;
 using UnityEngine;
 namespace PocketTanks.Networking
 {
@@ -7,6 +8,7 @@ namespace PocketTanks.Networking
     {
         public SocketIOComponent socketIOComponent;
         protected ConnectionStatus connectionStatus;
+        public bool IsDeletePlayerID = false;
         protected JSONObject PlayerData = new JSONObject();
 
         // Start is called before the first frame update
@@ -16,12 +18,11 @@ namespace PocketTanks.Networking
             socketIOComponent.Connect();
             socketIOComponent.On("connection", OnConnection); // "Event",Function
             socketIOComponent.On("error", OnError);
+            if (IsDeletePlayerID)
+            {
+                PlayerPrefs.DeleteKey(KeyStrings.PlayerID);
+            }
         }
-
-        private void Update()
-        {
-        }
-        
         
         private void OnError(SocketIOEvent obj)
         {
@@ -44,7 +45,7 @@ namespace PocketTanks.Networking
                 {
 
                     PlayerData[KeyStrings.PlayerID] = new JSONObject(PlayerPrefs.GetString(KeyStrings.PlayerID));
-                    Debug.Log("AuthenticationRequest" + PlayerPrefs.GetString(KeyStrings.PlayerID));
+                    Debug.Log("AuthenticationRequest + playerID" + PlayerPrefs.GetString(KeyStrings.PlayerID));
                     PlayerAuthentication();
                 }
                 else
@@ -62,12 +63,25 @@ namespace PocketTanks.Networking
             
         }
 
-        private void OnAuthenticationResponse(SocketIOEvent socketIOEvent)
+        private void OnAuthenticationResponse(SocketIOEvent ResponseData)
         {
-            Debug.Log("NetworkService + OnAuthenticationResponse" + socketIOEvent);
+            Debug.Log("NetworkService + OnAuthenticationResponse" + ResponseData);
             connectionStatus = ConnectionStatus.Authenticated;
+            PlayerInfo playerInfo = JsonUtility.FromJson<PlayerInfo>(ResponseData.data.ToString());
+            Debug.Log("Player id from json" + playerInfo.PlayerID);
+            if (playerInfo.PlayerID != "")
+            {
+                PlayerPrefs.SetString(KeyStrings.PlayerID, playerInfo.PlayerID);
+                Debug.Log("ID in if" + PlayerPrefs.GetString(KeyStrings.PlayerID));
+            }
+            Debug.Log("ID" + PlayerPrefs.GetString(KeyStrings.PlayerID));
         }
     }
 
 
+}
+[Serializable]
+public class PlayerInfo
+{
+    public string PlayerID;
 }
