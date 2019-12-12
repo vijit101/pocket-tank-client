@@ -77,11 +77,5 @@ namespace PocketTanks.Networking
             Debug.Log("ID" + PlayerPrefs.GetString(KeyStrings.PlayerID));
         }
     }
-
-
 }
-[Serializable]
-public class PlayerInfo
-{
-    public string PlayerID;
-}
+

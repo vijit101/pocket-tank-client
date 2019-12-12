@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   socketIOComponent: {fileID: 90671069}
+  IsDeletePlayerID: 0
 --- !u!1 &483600529
 GameObject:
   m_ObjectHideFlags: 0
