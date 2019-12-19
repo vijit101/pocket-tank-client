@@ -7,7 +7,7 @@ namespace PocketTanks.Networking
     public class NetworkService : MonoSingletonGeneric<NetworkService>
     {
         public SocketIOComponent socketIOComponent;
-        protected ConnectionStatus connectionStatus;
+        public ConnectionStatus connectionStatus;
         public bool IsDeletePlayerID = false;
         protected JSONObject PlayerData = new JSONObject();
 
@@ -33,15 +33,16 @@ namespace PocketTanks.Networking
         {
             Debug.Log("NetworkService + Server Connected" + socketIOEvent);
             connectionStatus = ConnectionStatus.Connected;
-            AuthenticationRequest();
+            AuthenticationController authentication = new AuthenticationController(socketIOComponent);
+            authentication.AuthenticationRequest();
+            //AuthenticationRequest();
         }
 
         private void AuthenticationRequest()
         {
             if (connectionStatus == ConnectionStatus.Connected)
             {
-                //socketIOComponent.Emit(KeyStrings.AuthenticationRequest, PlayerData);
-                if(PlayerPrefs.GetString(KeyStrings.PlayerID) != "")
+                if (PlayerPrefs.GetString(KeyStrings.PlayerID) != "")
                 {
 
                     PlayerData[KeyStrings.PlayerID] = new JSONObject(PlayerPrefs.GetString(KeyStrings.PlayerID));
@@ -50,7 +51,7 @@ namespace PocketTanks.Networking
                 }
                 else
                 {
-                    PlayerData[KeyStrings.PlayerID] = new JSONObject("0");
+                    PlayerData[KeyStrings.PlayerID] = new JSONObject("0"); // set 0 for null check on server and assign a pid
                     PlayerAuthentication();
                 }
             }
@@ -60,7 +61,7 @@ namespace PocketTanks.Networking
         {
             socketIOComponent.Emit(KeyStrings.AuthenticationRequest, PlayerData);
             socketIOComponent.On(KeyStrings.AuthenticationResponse, OnAuthenticationResponse);
-            
+
         }
 
         private void OnAuthenticationResponse(SocketIOEvent ResponseData)
@@ -75,6 +76,10 @@ namespace PocketTanks.Networking
                 Debug.Log("ID in if" + PlayerPrefs.GetString(KeyStrings.PlayerID));
             }
             Debug.Log("ID" + PlayerPrefs.GetString(KeyStrings.PlayerID));
+        }
+        public void StartMatchMaking()
+        {
+            socketIOComponent.Emit(KeyStrings.StartMatchMaking);
         }
     }
 }

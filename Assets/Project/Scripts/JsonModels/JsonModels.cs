@@ -1,7 +1,7 @@
 ﻿using System;
 
 /// <summary>
-/// User For Player ID 
+/// Used For Authentication Player ID 
 /// </summary>
 [Serializable]
 public class PlayerInfo
