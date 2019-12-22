@@ -46,8 +46,12 @@ public class AuthenticationController
         {
             PlayerPrefs.SetString(KeyStrings.PlayerID, playerInfo.PlayerID);
             Debug.Log("ID in if" + PlayerPrefs.GetString(KeyStrings.PlayerID));
+            NetworkService.connectionStatus = ConnectionStatus.Authenticated;
+            ScreenService.Instance.ChangeToScreen(ScreenType.Lobby);
         }
         Debug.Log("ID" + PlayerPrefs.GetString(KeyStrings.PlayerID));
+        NetworkService.connectionStatus = ConnectionStatus.Authenticated;
+        ScreenService.Instance.ChangeToScreen(ScreenType.Lobby);
     }
-    
+
 }

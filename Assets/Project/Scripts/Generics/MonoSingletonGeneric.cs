@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
-public class MonoSingletonGeneric<T> : MonoBehaviour where T : MonoSingletonGeneric<T>
+public class MonoSingletongeneric<T> : MonoBehaviour where T : MonoSingletongeneric<T>
 {
     private static T instance;
     public static T Instance { get { return instance; } }
-    // Start is called before the first frame update
-    void Start()
+    protected virtual void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
             instance = (T)this;
         }
@@ -15,6 +14,5 @@ public class MonoSingletonGeneric<T> : MonoBehaviour where T : MonoSingletonGene
         {
             Destroy(this);
         }
-        
     }
 }
