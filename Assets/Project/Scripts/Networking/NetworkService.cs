@@ -40,6 +40,7 @@ namespace PocketTanks.Networking
         
         public void StartMatchMaking()
         {
+            ScreenService.Instance.ChangeToScreen(ScreenType.MatchMaking);
             socketIOComponent.Emit(KeyStrings.StartMatchMaking);
         }
     }

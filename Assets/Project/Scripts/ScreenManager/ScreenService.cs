@@ -8,6 +8,7 @@ public class ScreenService : MonoSingletongeneric<ScreenService>
     private void Start()
     {
         currentActiveScreen = allGameScreens[0];
+        currentActiveScreen.gameObject.SetActive(true);
     }
     public void ChangeToScreen(ScreenType screenType)
     {
@@ -20,7 +21,7 @@ public class ScreenService : MonoSingletongeneric<ScreenService>
         }
         else
         {
-            Debug.LogError("screenType Does not Exist");
+            Debug.LogError("screenType Does not Exist or Screen type set to None");
         }
     }
 }
