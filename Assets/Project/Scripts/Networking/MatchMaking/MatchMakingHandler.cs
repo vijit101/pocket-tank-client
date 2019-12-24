@@ -1,12 +1,11 @@
-﻿using PocketTanks.Networking;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MatchMakingHandler
+﻿namespace PocketTanks.Networking
 {
-    public void OnStartButton()
+    public class MatchMakingHandler
     {
-        NetworkService.Instance.StartMatchMaking();
+        public void OnStartButton()
+        {
+            NetworkService.Instance.StartMatchMaking();
+            //NetworkService.Instance.socketIOComponent.On(KeyStrings.StartGamePlay,StartGame);
+        }
     }
 }

@@ -1,5 +1,6 @@
-﻿using SocketIO;
-using System;
+﻿using PocketTanks.Generics;
+using PocketTanks.Screens;
+using SocketIO;
 using UnityEngine;
 namespace PocketTanks.Networking
 {
@@ -42,7 +43,16 @@ namespace PocketTanks.Networking
         {
             ScreenService.Instance.ChangeToScreen(ScreenType.MatchMaking);
             socketIOComponent.Emit(KeyStrings.StartMatchMaking);
+            socketIOComponent.On(KeyStrings.StartGamePlay, StartGame);
         }
+
+        private void StartGame(SocketIOEvent obj)
+        {
+            Debug.Log("Start Game");
+            ScreenService.Instance.ChangeToScreen(ScreenType.GamePlay);
+
+        }
+
     }
 }
 

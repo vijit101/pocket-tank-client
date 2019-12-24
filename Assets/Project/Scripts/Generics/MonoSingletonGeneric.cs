@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
-
-public class MonoSingletongeneric<T> : MonoBehaviour where T : MonoSingletongeneric<T>
+namespace PocketTanks.Generics
 {
-    private static T instance;
-    public static T Instance { get { return instance; } }
-    protected virtual void Awake()
+    public class MonoSingletongeneric<T> : MonoBehaviour where T : MonoSingletongeneric<T>
     {
-        if (instance == null)
+        private static T instance;
+        public static T Instance { get { return instance; } }
+        protected virtual void Awake()
         {
-            instance = (T)this;
-        }
-        else
-        {
-            Destroy(this);
+            if (instance == null)
+            {
+                instance = (T)this;
+            }
+            else
+            {
+                Destroy(this);
+            }
         }
     }
+
 }

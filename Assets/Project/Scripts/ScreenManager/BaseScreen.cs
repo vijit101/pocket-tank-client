@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
-
-public class BaseScreen : MonoBehaviour
+namespace PocketTanks.Screens
 {
-    public ScreenType screenType;
+    public class BaseScreen : MonoBehaviour
+    {
+        public ScreenType screenType;
+    }
 }
+
