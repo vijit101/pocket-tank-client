@@ -8,3 +8,8 @@ public class PlayerInfo
 {
     public string PlayerID;
 }
+[Serializable]
+public class EnablePlayer
+{
+    public bool Enable;
+}

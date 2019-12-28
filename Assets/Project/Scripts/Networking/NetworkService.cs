@@ -46,13 +46,27 @@ namespace PocketTanks.Networking
             socketIOComponent.On(KeyStrings.StartGamePlay, StartGame);
         }
 
-        private void StartGame(SocketIOEvent obj)
+        private void StartGame(SocketIOEvent ResponseData)
         {
             Debug.Log("Start Game");
             ScreenService.Instance.ChangeToScreen(ScreenType.GamePlay);
+            EnablePlayer enableData = JsonUtility.FromJson<EnablePlayer>(ResponseData.data.ToString());
+            if (enableData!=null)
+            {
+                if (enableData.Enable == true)
+                {
+                    PlayerPrefs.SetInt(KeyStrings.PlayerPriorityServer, 1);     //1 refers to be a player 1 on server
+                    Debug.Log("Player1");
+                }
+                else
+                {
+                    PlayerPrefs.SetInt(KeyStrings.PlayerPriorityServer, 2);     //2 refers to player 2 on server
+                    Debug.Log("Player2");
+                }
 
+            }
+            
         }
-
     }
 }
 
