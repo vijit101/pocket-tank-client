@@ -754,7 +754,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1774738413}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 100
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -901,10 +901,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 384958922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9215826178d14aa42bc8179083a8d612, type: 3}
+  m_Script: {fileID: 11500000, guid: b403a59173090f34da1349c3923d8fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   screenType: 5
+  powerSlider: {fileID: 340301849}
+  angleSlider: {fileID: 1326132458}
+  fireButton: {fileID: 1246414855}
 --- !u!1 &483600529
 GameObject:
   m_ObjectHideFlags: 0
@@ -2446,7 +2449,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1511571383}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 1
+  m_MaxValue: 360
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -2689,6 +2692,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1687002318}
+  - component: {fileID: 1687002319}
   m_Layer: 0
   m_Name: TankService
   m_TagString: Untagged
@@ -2710,6 +2714,20 @@ Transform:
   m_Father: {fileID: 2073384549}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1687002319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687002317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a97dccdc26030da4fb44bbcf3a5df073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tankView: {fileID: 4342218625146618311, guid: 52fee5be45e982b46b8b4c356e1cdaf8,
+    type: 3}
 --- !u!1 &1774738412
 GameObject:
   m_ObjectHideFlags: 0

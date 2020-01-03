@@ -7,6 +7,7 @@ namespace PocketTanks.Screens
     {
         public BaseScreen[] allGameScreens;
         private BaseScreen currentActiveScreen;
+        public BaseScreen GetActiveScreen { get { return currentActiveScreen; } }
         private void Start()
         {
             currentActiveScreen = allGameScreens[0];
@@ -23,7 +24,21 @@ namespace PocketTanks.Screens
             }
             else
             {
-                Debug.LogError("screenType Does not Exist or Screen type set to None or Add in Screen to ScreenService");
+                Debug.LogFormat("screenType Does not Exist or Screen type set to None or Add in Screen to ScreenService");
+            }
+        }
+
+        public BaseScreen GetAnyBaseScreen(ScreenType screenType)
+        {
+            BaseScreen screenToReturn = Array.Find(allGameScreens, x => x.screenType.Equals(screenType));
+            if (screenToReturn != null)
+            {
+                return screenToReturn;
+            }
+            else
+            {
+                Debug.LogFormat("screenType Does not Exist or Screen type set to None or Add in Screen to ScreenService");
+                return null;
             }
         }
     }
