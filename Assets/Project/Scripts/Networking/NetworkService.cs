@@ -1,4 +1,5 @@
 ﻿using System;
+using PocketTanks.Bullets;
 using PocketTanks.Generics;
 using PocketTanks.Screens;
 using PocketTanks.Tanks;
@@ -69,7 +70,7 @@ namespace PocketTanks.Networking
             if (ScreenService.Instance.GetActiveScreen.screenType != ScreenType.GamePlay)
             {
                 ScreenService.Instance.ChangeToScreen(ScreenType.GamePlay);
-                tankPlayer1 = TankService.Instance.GetTank(new Vector3(-6,-3,0));
+                tankPlayer1 = TankService.Instance.GetTank(new Vector3(-6,-3,0));// change it later
                 tankPlayer2 = TankService.Instance.GetTank(new Vector3(6,3,0));
 
             }
@@ -86,6 +87,8 @@ namespace PocketTanks.Networking
                         PlayerPrefs.SetString(KeyStrings.PlayerPriorityServer, "1");     //1 refers to be a player 1 on server
                         gamePlayScreen.angleSlider.onValueChanged.AddListener(tankPlayer1.OnAngleChange);
                         gamePlayScreen.fireButton.onClick.AddListener(() => { SendGamePlayData(gamePlayScreen); });
+                        gamePlayScreen.fireButton.onClick.AddListener(() => { GetAndFireBullet(tankPlayer1.BulletSpawnPos,gamePlayScreen.powerSlider.value,gamePlayScreen.angleSlider.value); });
+
                     }
                     gamePlayScreen.EnableAllInput();
                     Debug.Log("Player1");
@@ -98,7 +101,7 @@ namespace PocketTanks.Networking
                         PlayerPrefs.SetString(KeyStrings.PlayerPriorityServer, "2");     //1 refers to be a player 1 on server
                         gamePlayScreen.angleSlider.onValueChanged.AddListener(tankPlayer2.OnAngleChange);
                         gamePlayScreen.fireButton.onClick.AddListener(() => { SendGamePlayData(gamePlayScreen); });
-
+                        gamePlayScreen.fireButton.onClick.AddListener(() => { GetAndFireBullet(tankPlayer2.BulletSpawnPos, gamePlayScreen.powerSlider.value,gamePlayScreen.angleSlider.value); });
                     }
                     gamePlayScreen.DisableAllInput();
                     Debug.Log("Player2");
@@ -106,6 +109,12 @@ namespace PocketTanks.Networking
 
             }
             
+        }
+
+        private void GetAndFireBullet(Transform spawnBulletPos,float BulletPower,float Angle)
+        {
+            Debug.Log("BulletPower" + BulletPower);
+            BulletView bulletView = BulletService.Instance.GetBullet(spawnBulletPos,BulletPower,Angle);
         }
 
         private void SendGamePlayData(GamePlayScreen screen)

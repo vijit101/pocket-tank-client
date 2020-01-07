@@ -5,18 +5,8 @@ namespace PocketTanks.Tanks
     public class TankView : MonoBehaviour
     {
         public GameObject tankTurrent;
+        public Transform BulletSpawnPos;
         // Start is called before the first frame update
-        void Start()
-        {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         public void OnAngleChange(float AngularValue)
         {
             tankTurrent.transform.rotation = Quaternion.Euler(0, 0, AngularValue);
