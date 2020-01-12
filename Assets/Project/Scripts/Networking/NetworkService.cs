@@ -54,12 +54,14 @@ namespace PocketTanks.Networking
             socketIOComponent.On(KeyStrings.FireFromPlayer1, (evtData) => {
                 FireDataServer fireP1 = JsonUtility.FromJson<FireDataServer>(evtData.data.ToString());
                 tankPlayer1.OnAngleChange(fireP1.angleSlider);
+                GetAndFireBullet(tankPlayer1.BulletSpawnPos, fireP1.powerSlider, fireP1.angleSlider);
                 Debug.Log(evtData);
             });// receieved from player 2 so fire player 1
 
             socketIOComponent.On(KeyStrings.FireFromPlayer2, (evtData) => {
                 FireDataServer fireP2 = JsonUtility.FromJson<FireDataServer>(evtData.data.ToString());
                 tankPlayer2.OnAngleChange(fireP2.angleSlider);
+                GetAndFireBullet(tankPlayer2.BulletSpawnPos, fireP2.powerSlider, fireP2.angleSlider);
                 Debug.Log(evtData);
             });// receieved from player 1 so fire player 2
         }
