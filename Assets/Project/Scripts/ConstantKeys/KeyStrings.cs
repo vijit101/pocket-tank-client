@@ -5,6 +5,9 @@
     public static string  PlayerPriorityServer = "PlayerPriorityServer";
     public static string powerSlider = "powerSlider";
     public static string angleSlider = "angleSlider";
+    public static string playerHealth1 = "playerHealth1";
+    public static string playerHealth2 = "playerHealth2";
+
 
     //event strings
     public static string AuthenticationRequest = "AuthenticationRequest";

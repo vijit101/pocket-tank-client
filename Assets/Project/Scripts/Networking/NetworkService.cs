@@ -88,7 +88,7 @@ namespace PocketTanks.Networking
                         Debug.Log("PlayerPriorityServer" + PlayerPrefs.GetString(KeyStrings.PlayerPriorityServer));
                         PlayerPrefs.SetString(KeyStrings.PlayerPriorityServer, "1");     //1 refers to be a player 1 on server
                         gamePlayScreen.angleSlider.onValueChanged.AddListener(tankPlayer1.OnAngleChange);
-                        gamePlayScreen.fireButton.onClick.AddListener(() => { SendGamePlayData(gamePlayScreen); });
+                        gamePlayScreen.fireButton.onClick.AddListener(() => { SendGamePlayData(gamePlayScreen,tankPlayer1,tankPlayer2); });
                         gamePlayScreen.fireButton.onClick.AddListener(() => { GetAndFireBullet(tankPlayer1.BulletSpawnPos,gamePlayScreen.powerSlider.value,gamePlayScreen.angleSlider.value); });
 
                     }
@@ -102,7 +102,7 @@ namespace PocketTanks.Networking
                         Debug.Log("PlayerPriorityServer" + PlayerPrefs.GetString(KeyStrings.PlayerPriorityServer));
                         PlayerPrefs.SetString(KeyStrings.PlayerPriorityServer, "2");     //1 refers to be a player 1 on server
                         gamePlayScreen.angleSlider.onValueChanged.AddListener(tankPlayer2.OnAngleChange);
-                        gamePlayScreen.fireButton.onClick.AddListener(() => { SendGamePlayData(gamePlayScreen); });
+                        gamePlayScreen.fireButton.onClick.AddListener(() => { SendGamePlayData(gamePlayScreen,tankPlayer1,tankPlayer2); });
                         gamePlayScreen.fireButton.onClick.AddListener(() => { GetAndFireBullet(tankPlayer2.BulletSpawnPos, gamePlayScreen.powerSlider.value,gamePlayScreen.angleSlider.value); });
                     }
                     gamePlayScreen.DisableAllInput();
@@ -119,11 +119,13 @@ namespace PocketTanks.Networking
             BulletView bulletView = BulletService.Instance.GetBullet(spawnBulletPos,BulletPower,Angle);
         }
 
-        private void SendGamePlayData(GamePlayScreen screen)
+        private void SendGamePlayData(GamePlayScreen screen, TankView playerTank1, TankView playerTank2)
         {
             JSONObject SendGameplayJson = new JSONObject();
             SendGameplayJson[KeyStrings.powerSlider] = new JSONObject(screen.powerSlider.value);
             SendGameplayJson[KeyStrings.angleSlider] = new JSONObject(screen.angleSlider.value);
+            SendGameplayJson[KeyStrings.playerHealth1] = new JSONObject(playerTank1.health);
+            SendGameplayJson[KeyStrings.playerHealth2] = new JSONObject(playerTank2.health);
             socketIOComponent.Emit(KeyStrings.FireGamePlayData,SendGameplayJson);
         }
     }

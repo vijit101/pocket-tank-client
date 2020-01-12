@@ -15,6 +15,8 @@ public class EnablePlayer
 }
 public class FireDataServer
 {
-    public int powerSlider;
-    public int angleSlider;
+    public float powerSlider;
+    public float angleSlider;
+    public float playerHealth1;
+    public float playerHealth2;
 }
