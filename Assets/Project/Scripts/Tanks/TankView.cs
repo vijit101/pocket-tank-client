@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PocketTanks.Networking;
+using UnityEngine;
 
 namespace PocketTanks.Tanks
 {
@@ -20,6 +21,7 @@ namespace PocketTanks.Tanks
             if (healthLeft > 0)
             {
                 health = healthLeft;
+                NetworkService.Instance.EmitHealthEvent(this,PlayerPrefs.GetString(KeyStrings.PlayerPriorityServer));
             }
             else
             {

@@ -15,6 +15,7 @@ namespace PocketTanks.Bullets
             IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
             if (damagable != null)
             {
+                Debug.LogError("++Player " + PlayerPrefs.GetString(KeyStrings.PlayerPriorityServer));
                 damagable.OnDamage(damage);
                 if (OnHitParticleEffect != null)
                 {

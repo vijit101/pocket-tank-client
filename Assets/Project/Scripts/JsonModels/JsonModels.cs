@@ -17,6 +17,4 @@ public class FireDataServer
 {
     public float powerSlider;
     public float angleSlider;
-    public float playerHealth1;
-    public float playerHealth2;
 }
