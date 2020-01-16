@@ -5,7 +5,7 @@
     public static string  PlayerPriorityServer = "PlayerPriorityServer";
     public static string powerSlider = "powerSlider";
     public static string angleSlider = "angleSlider";
-    public static string playerHealth = "playerHealth";
+    public static string playerHealth1 = "playerHealth1";
     public static string playerHealth2 = "playerHealth2";
 
 

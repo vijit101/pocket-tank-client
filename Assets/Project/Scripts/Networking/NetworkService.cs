@@ -133,11 +133,11 @@ namespace PocketTanks.Networking
             socketIOComponent.Emit(KeyStrings.FireGamePlayData,SendGameplayJson);
         }
 
-        public void EmitHealthEvent(TankView playerTank,String FiredByPlayer)
+        public void EmitHealthEvent()
         {
             JSONObject SendHealthJson = new JSONObject();
-            SendHealthJson[KeyStrings.playerHealth] = new JSONObject(playerTank.health); //remove to seperate fx create two events ondeath & onbullet trigger
-            SendHealthJson[KeyStrings.PlayerPriorityServer] = new JSONObject(FiredByPlayer); //remove to seperate fx
+            SendHealthJson[KeyStrings.playerHealth1] = new JSONObject(tankPlayer1.health); //remove to seperate fx create two events ondeath & onbullet trigger
+            SendHealthJson[KeyStrings.playerHealth2] = new JSONObject(tankPlayer2.health); //remove to seperate fx
             socketIOComponent.Emit(KeyStrings.EmitHealthData,SendHealthJson);
         }
     }

@@ -21,7 +21,7 @@ namespace PocketTanks.Tanks
             if (healthLeft > 0)
             {
                 health = healthLeft;
-                NetworkService.Instance.EmitHealthEvent(this,PlayerPrefs.GetString(KeyStrings.PlayerPriorityServer));
+                NetworkService.Instance.EmitHealthEvent();
             }
             else
             {
