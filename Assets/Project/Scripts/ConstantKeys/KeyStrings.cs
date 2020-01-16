@@ -22,5 +22,7 @@
     public static string FireFromPlayer1 = "FireFromPlayer1";
     public static string FireFromPlayer2 = "FireFromPlayer2";
     public static string EmitHealthData = "EmitHealthData";
+    public static string HealthFromP1 = "HealthFromP1";
+    public static string HealthFromP2 = "HealthFromP2";
 
 }

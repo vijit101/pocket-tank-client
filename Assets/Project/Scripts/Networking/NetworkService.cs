@@ -51,6 +51,7 @@ namespace PocketTanks.Networking
             ScreenService.Instance.ChangeToScreen(ScreenType.MatchMaking);
             socketIOComponent.Emit(KeyStrings.StartMatchMaking);
             socketIOComponent.On(KeyStrings.StartGamePlay, StartGame);
+            
 
             socketIOComponent.On(KeyStrings.FireFromPlayer1, (evtData) => {
                 FireDataServer fireP1 = JsonUtility.FromJson<FireDataServer>(evtData.data.ToString());
@@ -58,6 +59,28 @@ namespace PocketTanks.Networking
                 GetAndFireBullet(tankPlayer1.BulletSpawnPos, fireP1.powerSlider, fireP1.angleSlider);
                 Debug.Log(evtData);
             });// receieved from player 2 so fire player 1
+
+            socketIOComponent.On(KeyStrings.HealthFromP1, (evtData) => {
+                HealthData healthData = JsonUtility.FromJson<HealthData>(evtData.data.ToString());
+                BaseScreen screen = ScreenService.Instance.GetActiveScreen;
+                GamePlayScreen gamePlayScreen = screen.GetComponent<GamePlayScreen>();
+                if (gamePlayScreen != null)
+                {
+                    gamePlayScreen.healthTextP1.text = "HP: "+healthData.playerHealth1.ToString();
+                    gamePlayScreen.healthTextP2.text = "HP: "+healthData.playerHealth2.ToString();
+                }
+            });
+
+            socketIOComponent.On(KeyStrings.HealthFromP2, (evtData) => {
+                HealthData healthData = JsonUtility.FromJson<HealthData>(evtData.data.ToString());
+                BaseScreen screen = ScreenService.Instance.GetActiveScreen;
+                GamePlayScreen gamePlayScreen = screen.GetComponent<GamePlayScreen>();
+                if (gamePlayScreen != null)
+                {
+                    gamePlayScreen.healthTextP1.text = "HP: " + healthData.playerHealth1.ToString();
+                    gamePlayScreen.healthTextP2.text = "HP: " + healthData.playerHealth2.ToString();
+                }
+            });
 
             socketIOComponent.On(KeyStrings.FireFromPlayer2, (evtData) => {
                 FireDataServer fireP2 = JsonUtility.FromJson<FireDataServer>(evtData.data.ToString());

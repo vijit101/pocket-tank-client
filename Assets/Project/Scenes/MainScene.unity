@@ -908,6 +908,8 @@ MonoBehaviour:
   powerSlider: {fileID: 340301849}
   angleSlider: {fileID: 1326132458}
   fireButton: {fileID: 1246414855}
+  healthTextP1: {fileID: 65846099}
+  healthTextP2: {fileID: 1123628860}
 --- !u!1 &483600529
 GameObject:
   m_ObjectHideFlags: 0
