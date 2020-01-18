@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace PocketTanks.Screens
     {
         public Slider powerSlider,angleSlider;
         public Button fireButton;
+        public TextMeshProUGUI healthTextP1, healthTextP2;
 
         public void DisableAllInput()
         {

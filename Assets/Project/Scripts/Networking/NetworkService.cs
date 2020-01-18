@@ -51,12 +51,36 @@ namespace PocketTanks.Networking
             ScreenService.Instance.ChangeToScreen(ScreenType.MatchMaking);
             socketIOComponent.Emit(KeyStrings.StartMatchMaking);
             socketIOComponent.On(KeyStrings.StartGamePlay, StartGame);
+            
+
             socketIOComponent.On(KeyStrings.FireFromPlayer1, (evtData) => {
                 FireDataServer fireP1 = JsonUtility.FromJson<FireDataServer>(evtData.data.ToString());
                 tankPlayer1.OnAngleChange(fireP1.angleSlider);
                 GetAndFireBullet(tankPlayer1.BulletSpawnPos, fireP1.powerSlider, fireP1.angleSlider);
                 Debug.Log(evtData);
             });// receieved from player 2 so fire player 1
+
+            socketIOComponent.On(KeyStrings.HealthFromP1, (evtData) => {
+                HealthData healthData = JsonUtility.FromJson<HealthData>(evtData.data.ToString());
+                BaseScreen screen = ScreenService.Instance.GetActiveScreen;
+                GamePlayScreen gamePlayScreen = screen.GetComponent<GamePlayScreen>();
+                if (gamePlayScreen != null)
+                {
+                    gamePlayScreen.healthTextP1.text = "HP: "+healthData.playerHealth1.ToString();
+                    gamePlayScreen.healthTextP2.text = "HP: "+healthData.playerHealth2.ToString();
+                }
+            });
+
+            socketIOComponent.On(KeyStrings.HealthFromP2, (evtData) => {
+                HealthData healthData = JsonUtility.FromJson<HealthData>(evtData.data.ToString());
+                BaseScreen screen = ScreenService.Instance.GetActiveScreen;
+                GamePlayScreen gamePlayScreen = screen.GetComponent<GamePlayScreen>();
+                if (gamePlayScreen != null)
+                {
+                    gamePlayScreen.healthTextP1.text = "HP: " + healthData.playerHealth1.ToString();
+                    gamePlayScreen.healthTextP2.text = "HP: " + healthData.playerHealth2.ToString();
+                }
+            });
 
             socketIOComponent.On(KeyStrings.FireFromPlayer2, (evtData) => {
                 FireDataServer fireP2 = JsonUtility.FromJson<FireDataServer>(evtData.data.ToString());
@@ -74,7 +98,7 @@ namespace PocketTanks.Networking
                 ScreenService.Instance.ChangeToScreen(ScreenType.GamePlay);
                 tankPlayer1 = TankService.Instance.GetTank(new Vector3(-6,-3,0));// change it later
                 tankPlayer2 = TankService.Instance.GetTank(new Vector3(6,3,0));
-
+                
             }
             BaseScreen currentScreen = ScreenService.Instance.GetActiveScreen;
             GamePlayScreen gamePlayScreen = currentScreen.GetComponent<GamePlayScreen>();
@@ -113,6 +137,11 @@ namespace PocketTanks.Networking
             
         }
 
+        private void Instance_OnBulletCollide(TankView arg1, TankView arg2)
+        {
+            throw new NotImplementedException();
+        }
+
         private void GetAndFireBullet(Transform spawnBulletPos,float BulletPower,float Angle)
         {
             Debug.Log("BulletPower" + BulletPower);
@@ -125,6 +154,14 @@ namespace PocketTanks.Networking
             SendGameplayJson[KeyStrings.powerSlider] = new JSONObject(screen.powerSlider.value);
             SendGameplayJson[KeyStrings.angleSlider] = new JSONObject(screen.angleSlider.value);
             socketIOComponent.Emit(KeyStrings.FireGamePlayData,SendGameplayJson);
+        }
+
+        public void EmitHealthEvent()
+        {
+            JSONObject SendHealthJson = new JSONObject();
+            SendHealthJson[KeyStrings.playerHealth1] = new JSONObject(tankPlayer1.health); //remove to seperate fx create two events ondeath & onbullet trigger
+            SendHealthJson[KeyStrings.playerHealth2] = new JSONObject(tankPlayer2.health); //remove to seperate fx
+            socketIOComponent.Emit(KeyStrings.EmitHealthData,SendHealthJson);
         }
     }
 }

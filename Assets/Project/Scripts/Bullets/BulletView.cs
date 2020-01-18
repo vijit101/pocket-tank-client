@@ -7,6 +7,23 @@ namespace PocketTanks.Bullets
     public class BulletView : MonoBehaviour
     {
         Rigidbody2D rgbd;
+        public float damage = 10;
+        public GameObject OnHitParticleEffect;
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            IDamagable damagable = collision.gameObject.GetComponent<IDamagable>();
+            if (damagable != null)
+            {
+                Debug.LogError("++Player " + PlayerPrefs.GetString(KeyStrings.PlayerPriorityServer));
+                damagable.OnDamage(damage);
+                if (OnHitParticleEffect != null)
+                {
+                    Instantiate(OnHitParticleEffect, transform);
+                }
+                Destroy(this.gameObject);
+            }
+        }
         private void Awake()
         {
             rgbd = gameObject.GetComponent<Rigidbody2D>();
