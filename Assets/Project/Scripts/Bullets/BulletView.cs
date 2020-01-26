@@ -19,7 +19,8 @@ namespace PocketTanks.Bullets
                 damagable.OnDamage(damage);
                 if (OnHitParticleEffect != null)
                 {
-                    Instantiate(OnHitParticleEffect, transform);
+                    Instantiate(OnHitParticleEffect, transform.position,Quaternion.identity);
+
                 }
                 Destroy(this.gameObject);
             }

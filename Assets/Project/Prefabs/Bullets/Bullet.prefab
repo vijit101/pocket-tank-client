@@ -96,7 +96,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
-  OnHitParticleEffect: {fileID: 0}
+  OnHitParticleEffect: {fileID: 3172478847556575326, guid: 934b01985a4c3664cb01a86cccd2675c,
+    type: 3}
 --- !u!50 &-1663824089620116578
 Rigidbody2D:
   serializedVersion: 4
