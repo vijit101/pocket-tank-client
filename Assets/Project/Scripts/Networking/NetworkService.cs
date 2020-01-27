@@ -82,11 +82,25 @@ namespace PocketTanks.Networking
             socketIOComponent.On(KeyStrings.HealthFromP1, (evtData) => {
                 HealthData healthData = JsonUtility.FromJson<HealthData>(evtData.data.ToString());
                 BaseScreen screen = ScreenService.Instance.GetActiveScreen;
-                GamePlayScreen gamePlayScreen = screen.GetComponent<GamePlayScreen>();
+                GamePlayScreen gamePlayScreen = screen.GetComponent<GamePlayScreen>();               
                 if (gamePlayScreen != null)
                 {
                     gamePlayScreen.healthTextP1.text = "HP: "+healthData.playerHealth1.ToString();
                     gamePlayScreen.healthTextP2.text = "HP: "+healthData.playerHealth2.ToString();
+                }
+                if (healthData.playerHealth1 == 0)
+                {
+                    ScreenService.Instance.ChangeToScreen(ScreenType.GameOver);
+                    BaseScreen baseScreen = ScreenService.Instance.GetActiveScreen;
+                    GameOverScreen gameOverScreen = baseScreen.GetComponent<GameOverScreen>();
+                    gameOverScreen.PlayerGameOverText.text = "Player 2 Won";
+                }
+                if (healthData.playerHealth2 == 0)
+                {
+                    ScreenService.Instance.ChangeToScreen(ScreenType.GameOver);
+                    BaseScreen baseScreen = ScreenService.Instance.GetActiveScreen;
+                    GameOverScreen gameOverScreen = baseScreen.GetComponent<GameOverScreen>();
+                    gameOverScreen.PlayerGameOverText.text = "Player 1 Won";
                 }
             });
 
@@ -100,7 +114,40 @@ namespace PocketTanks.Networking
                     gamePlayScreen.healthTextP1.text = "HP: " + healthData.playerHealth1.ToString();
                     gamePlayScreen.healthTextP2.text = "HP: " + healthData.playerHealth2.ToString();
                 }
+                if (healthData.playerHealth1 == 0)
+                {
+                    ScreenService.Instance.ChangeToScreen(ScreenType.GameOver);
+                    BaseScreen baseScreen = ScreenService.Instance.GetActiveScreen;
+                    GameOverScreen gameOverScreen = baseScreen.GetComponent<GameOverScreen>();
+                    gameOverScreen.PlayerGameOverText.text = "Player 2 Won";
+                }
+                if (healthData.playerHealth2 == 0)
+                {
+                    ScreenService.Instance.ChangeToScreen(ScreenType.GameOver);
+                    BaseScreen baseScreen = ScreenService.Instance.GetActiveScreen;
+                    GameOverScreen gameOverScreen = baseScreen.GetComponent<GameOverScreen>();
+                    gameOverScreen.PlayerGameOverText.text = "Player 1 Won";
+                }
             });
+
+            //socketIOComponent.On(KeyStrings.GameOver, (evtData) => {
+            //    PlayerDeathData deathData = JsonUtility.FromJson<PlayerDeathData>(evtData.data.ToString());
+            //    if (deathData.playerDead == 1)  // 1 means player 1 dead else its default that player 1 Won
+            //    {
+            //        ScreenService.Instance.ChangeToScreen(ScreenType.GameOver);
+            //        BaseScreen screen = ScreenService.Instance.GetActiveScreen;
+            //        GameOverScreen gameOverScreen = screen.GetComponent<GameOverScreen>();
+            //        gameOverScreen.PlayerGameOverText.text = "Player 2 Won";
+            //    }
+            //    else
+            //    {
+            //        ScreenService.Instance.ChangeToScreen(ScreenType.GameOver);
+            //        BaseScreen screen = ScreenService.Instance.GetActiveScreen;
+            //        GameOverScreen gameOverScreen = screen.GetComponent<GameOverScreen>();
+            //        gameOverScreen.PlayerGameOverText.text = "Player 1 Won";
+
+            //    }
+            //});
 
         }
 
@@ -132,6 +179,12 @@ namespace PocketTanks.Networking
             socketIOComponent.Emit(KeyStrings.EmitHealthData,SendHealthJson);
         }
 
+        //public void EmitDeathEvent()
+        //{
+        //    JSONObject SendPlayerDead = new JSONObject();
+        //    SendPlayerDead[KeyStrings.playerDead] = new JSONObject(PlayerPrefs.GetString(KeyStrings.PlayerPriorityServer));
+        //    socketIOComponent.Emit(KeyStrings.OnDeath,SendPlayerDead);
+        //}
         
     }
 }

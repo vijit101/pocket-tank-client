@@ -26,3 +26,8 @@ public class HealthData
     public float playerHealth2;
 
 }
+[Serializable]
+public class PlayerDeathData
+{
+    public int playerDead;
+}
