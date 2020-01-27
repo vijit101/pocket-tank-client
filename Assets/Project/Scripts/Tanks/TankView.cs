@@ -9,6 +9,7 @@ namespace PocketTanks.Tanks
         public Transform BulletSpawnPos;
         [HideInInspector]
         public float health = 100;
+        public GameObject OnDeathParticle;
         // Start is called before the first frame update
         public void OnAngleChange(float AngularValue)
         {
@@ -17,16 +18,17 @@ namespace PocketTanks.Tanks
 
         public void OnDamage(float damage)
         {
-            float healthLeft = health - damage;
-            if (healthLeft > 0)
+            health -= damage;
+            NetworkService.Instance.EmitHealthEvent();
+            if (health <= 0)
             {
-                health = healthLeft;
-                NetworkService.Instance.EmitHealthEvent();
+                if (OnDeathParticle != null)
+                {
+                    Instantiate(OnDeathParticle, transform.position, Quaternion.identity);
+                }
+                Destroy(gameObject);
             }
-            else
-            {
-                Debug.Log("Player Dead");
-            }
+
         }
 
         public void SetTankPos(Vector3 positionToSpawn)

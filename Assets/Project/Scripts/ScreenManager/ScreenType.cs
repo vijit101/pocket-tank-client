@@ -5,5 +5,6 @@
     Authentication = 2,
     Lobby = 3,
     MatchMaking = 4,
-    GamePlay = 5
+    GamePlay = 5,
+    GameOver = 6
 }

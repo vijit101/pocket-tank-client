@@ -7,8 +7,7 @@
     public static string angleSlider = "angleSlider";
     public static string playerHealth1 = "playerHealth1";
     public static string playerHealth2 = "playerHealth2";
-
-
+    public static string playerDead = "playerDead";
 
     //event strings
     public static string AuthenticationRequest = "AuthenticationRequest";
@@ -24,5 +23,8 @@
     public static string EmitHealthData = "EmitHealthData";
     public static string HealthFromP1 = "HealthFromP1";
     public static string HealthFromP2 = "HealthFromP2";
+    public static string OnDeath = "OnDeath";
+    public static string GameOver = "GameOver";
+
 
 }
