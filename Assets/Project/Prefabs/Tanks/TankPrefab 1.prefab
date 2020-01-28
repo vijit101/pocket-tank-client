@@ -232,6 +232,8 @@ MonoBehaviour:
   tankTurrent: {fileID: 815017753810378596}
   BulletSpawnPos: {fileID: 399844647359861173}
   health: 100
+  OnDeathParticle: {fileID: 5766758244365061968, guid: 6b3caa47f77209d4ab7f07fb2db1146c,
+    type: 3}
 --- !u!61 &1037971671348062298
 BoxCollider2D:
   m_ObjectHideFlags: 0
