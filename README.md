@@ -7,6 +7,7 @@ Patterns Used - MVC,Socket events
 1) Authentication from server 
 
 ![](PocketTanks.gif)
+
 2) MatchMaking & GamePlay
 
 ![](PocketTanks2.gif)
